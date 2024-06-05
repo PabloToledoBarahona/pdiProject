@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto PDI</title>
+    <title>Subir Imagen</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>Bienvenido al Proyecto PDI</h1>
-            <nav>
-                <a href="{{ url_for('image_controller.upload_file') }}">Subir Imagen</a>
-            </nav>
+            <h1>Subir una Imagen</h1>
         </div>
     </header>
     <div class="container">
-        <p>¡Más funcionalidad próximamente!</p>
+        <form action="{{ url_for('image_controller.upload_file') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*">
+            <input type="submit" value="Subir">
+        </form>
     </div>
     <footer>
         <p>&copy; 2024 Proyecto PDI</p>

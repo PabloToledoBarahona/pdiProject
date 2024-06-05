@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto PDI</title>
+    <title>Mostrar Imagen</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>Bienvenido al Proyecto PDI</h1>
-            <nav>
-                <a href="{{ url_for('image_controller.upload_file') }}">Subir Imagen</a>
-            </nav>
+            <h1>Detalles de la Imagen</h1>
         </div>
     </header>
     <div class="container">
-        <p>¡Más funcionalidad próximamente!</p>
+        <h2>Imagen Subida</h2>
+        <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Imagen Subida">
+        <h2>Imagen Procesada</h2>
+        <img src="{{ url_for('static', filename='uploads/processed_image.png') }}" alt="Imagen Procesada">
     </div>
     <footer>
         <p>&copy; 2024 Proyecto PDI</p>
