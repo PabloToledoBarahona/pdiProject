@@ -20,7 +20,6 @@ def allowed_file(filename):
 @image_controller.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
         if 'file' not in request.files:
             return redirect(request.url)
         file = request.files['file']
@@ -60,3 +59,4 @@ def segmenta(x, t):
                 area += 1
     print("area: ", area)
     return y
+# TODO: Avanzar a partir de la clase 23 de febrero
