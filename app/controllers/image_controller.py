@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
-from app.modules import histogram, read_image
+from app.modules import histogram, read_image, segment_color
 
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
@@ -67,3 +67,24 @@ def read_image_view():
                 return error, 400
             return render_template('read_image.html', img_shape=img_shape, filename=filename)
     return render_template('read_image.html')
+
+
+@image_controller.route('/segment_color', methods=['GET', 'POST'])
+def segment_color_view():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return "No file part", 400
+        file = request.files['file']
+        if file.filename == '':
+            return "No selected file", 400
+        color_channel = request.form.get('color_channel')
+        threshold = int(request.form.get('threshold', 128))
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            segmented_image_path, error = segment_color.segment_by_color(file_path, color_channel, threshold)
+            if error:
+                return error, 400
+            return render_template('segment_color.html', segmented_image_path=os.path.basename(segmented_image_path), filename=filename)
+    return render_template('segment_color.html')

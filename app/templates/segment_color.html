@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segmentación por Color</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h2>Segmentación por Color</h2>
+            <form action="{{ url_for('image_controller.segment_color_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <label for="color_channel">Seleccionar Color:</label>
+                <select name="color_channel" id="color_channel">
+                    <option value="red">Rojo</option>
+                    <option value="green">Verde</option>
+                    <option value="blue">Azul</option>
+                </select>
+                <label for="threshold">Umbral:</label>
+                <input type="number" name="threshold" id="threshold" value="128" min="0" max="255">
+                <button type="submit" class="btn">Segmentar Imagen</button>
+            </form>
+            {% if segmented_image_path %}
+            <h2>Imagen Segmentada</h2>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='uploads/' ~ segmented_image_path) }}" alt="Imagen Segmentada" class="image-display">
+            </div>
+            <h2>Imagen Original</h2>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Imagen Original" class="image-display">
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
