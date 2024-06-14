@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertir a Blanco y Negro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h2>Convertir a Blanco y Negro</h2>
+            <form action="{{ url_for('image_controller.convert_bw_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <label for="r_weight">Peso de Rojo:</label>
+                <input type="number" name="r_weight" id="r_weight" value="0.33" step="0.01" min="0" max="1">
+                <label for="g_weight">Peso de Verde:</label>
+                <input type="number" name="g_weight" id="g_weight" value="0.33" step="0.01" min="0" max="1">
+                <label for="b_weight">Peso de Azul:</label>
+                <input type="number" name="b_weight" id="b_weight" value="0.33" step="0.01" min="0" max="1">
+                <button type="submit" class="btn">Convertir Imagen</button>
+            </form>
+            {% if bw_image_path %}
+            <h2>Imagen en Blanco y Negro</h2>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='uploads/' ~ bw_image_path) }}" alt="Imagen en Blanco y Negro" class="image-display">
+            </div>
+            <h2>Imagen Original</h2>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Imagen Original" class="image-display">
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
