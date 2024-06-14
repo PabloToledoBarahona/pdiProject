@@ -12,14 +12,18 @@
             <h1>Subir una Imagen</h1>
         </div>
     </header>
-    <div class="container">
-        <form action="{{ url_for('image_controller.upload_file') }}" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/*">
-            <input type="submit" value="Subir">
-        </form>
-    </div>
+    <main>
+        <div class="container">
+            <form action="{{ url_for('image_controller.upload_file') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <input type="submit" value="Subir" class="btn">
+            </form>
+        </div>
+    </main>
     <footer>
-        <p>Pablo Toledo & Sergio Escalante</p>
+        <div class="container">
+            <p>Pablo Toledo & Sergio Escalante</p>
+        </div>
     </footer>
 </body>
 </html>

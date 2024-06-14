@@ -12,14 +12,18 @@
             <h1>Detalles de la Imagen</h1>
         </div>
     </header>
-    <div class="container">
-        <h2>Imagen Subida</h2>
-        <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Imagen Subida">
-        <h2>Imagen Procesada</h2>
-        <img src="{{ url_for('static', filename='uploads/processed_image.png') }}" alt="Imagen Procesada">
-    </div>
+    <main>
+        <div class="container">
+            <h2>Imagen Subida</h2>
+            <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Imagen Subida" class="image-display">
+            <h2>Imagen Procesada</h2>
+            <img src="{{ url_for('static', filename='uploads/processed_image.png') }}" alt="Imagen Procesada" class="image-display">
+        </div>
+    </main>
     <footer>
-        <p>Pablo Toledo & Sergio Escalante</p>
+        <div class="container">
+            <p>Pablo Toledo & Sergio Escalante</p>
+        </div>
     </footer>
 </body>
 </html>
