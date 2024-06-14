@@ -22,12 +22,16 @@ header h1 {
 }
 
 nav {
-    margin-top: 10px;
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 nav ul li {

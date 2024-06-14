@@ -7,14 +7,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Subir Imagen</h1>
-    </header>
+    {% include 'navbar.html' %}
     <main>
-        <form action="{{ url_for('image_controller.handle_upload') }}" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/*">
-            <button type="submit">Subir Imagen</button>
-        </form>        
+        <div class="container">
+            <h1>Subir Imagen</h1>
+            <form action="{{ url_for('image_controller.upload') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <button type="submit" class="btn">Subir Imagen</button>
+            </form>
+        </div>
     </main>
     <footer>
         <p>Pablo Toledo & Sergio Escalante</p>

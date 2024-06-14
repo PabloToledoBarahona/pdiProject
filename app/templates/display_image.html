@@ -7,11 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Detalles de la Imagen</h1>
-        </div>
-    </header>
+    {% include 'navbar.html' %}
     <main>
         <div class="container">
             <h2>Imagen Subida</h2>
@@ -21,9 +17,7 @@
         </div>
     </main>
     <footer>
-        <div class="container">
-            <p>Pablo Toledo & Sergio Escalante</p>
-        </div>
+        <p>Pablo Toledo & Sergio Escalante</p>
     </footer>
 </body>
 </html>
