@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histograma</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h2>Generar Histograma</h2>
+            <form action="{{ url_for('image_controller.show_histogram') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <button type="submit" class="btn">Subir Imagen y Generar Histograma</button>
+            </form>
+            {% if histogram_path %}
+            <h2>Histograma</h2>
+            <img src="{{ url_for('static', filename='uploads/' ~ histogram_path) }}" alt="Histograma" class="image-display">
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
