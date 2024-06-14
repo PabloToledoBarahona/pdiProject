@@ -1,10 +1,33 @@
-<nav>
-    <ul>
-        <li><a href="{{ url_for('image_controller.index') }}">Inicio</a></li>
-        <li><a href="{{ url_for('image_controller.upload') }}">Subir Imagen</a></li>
-        <li><a href="#">Leer Imagen</a></li>
-        <li><a href="#">Segmentación por Color</a></li>
-        <li><a href="#">Convertir a Blanco y Negro</a></li>
-        <!-- Agregar enlaces adicionales para las demás funcionalidades -->
-    </ul>
-</nav>
+<div class="menu-hamburguesa">
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+    <nav class="menu">
+        <ul>
+            <li><a href="{{ url_for('image_controller.index') }}">Inicio</a></li>
+            <li><a href="{{ url_for('image_controller.upload') }}">Subir Imagen</a></li>
+            <li><a href="#">Leer Imagen</a></li>
+            <li><a href="#">Segmentación por Color</a></li>
+            <li><a href="#">Convertir a Blanco y Negro</a></li>
+            <li><a href="#">Modificar Brillo</a></li>
+            <li><a href="#">Modificar Contraste</a></li>
+            <li><a href="#">Imagen Negativa</a></li>
+            <li><a href="#">Escalar Imágenes</a></li>
+            <li><a href="#">Histograma</a></li>
+            <li><a href="#">Cuantización</a></li>
+            <li><a href="#">Reshape</a></li>
+            <li><a href="#">Segmentación con K-clusters</a></li>
+            <li><a href="#">Transformación Geométrica</a></li>
+            <li><a href="#">Filtros</a></li>
+            <li><a href="#">Detección de Bordes</a></li>
+            <li><a href="#">Detección de Objetos</a></li>
+            <li><a href="#">Convolución</a></li>
+            <li><a href="#">Fourier</a></li>
+            <li><a href="#">Morfología</a></li>
+            <li><a href="#">Suma y Resta de Imágenes</a></li>
+        </ul>
+    </nav>
+</div>

@@ -32,10 +32,21 @@ def upload():
 def display_image(filename):
     return render_template('display_image.html', filename=filename)
 
-# Agregar rutas adicionales para cada funcionalidad, utilizando los módulos correspondientes.
-# Ejemplo:
 @image_controller.route('/read_image/<filename>')
 def read_image_func(filename):
-    return read_image.display_image_info(filename)
+    img_info = read_image.display_image_info(filename)
+    return render_template('display_image.html', filename=filename, img_info=img_info)
+
+# Agrega aquí rutas adicionales para cada funcionalidad utilizando los módulos correspondientes
+# Ejemplo:
+@image_controller.route('/segment_color/<filename>')
+def segment_color_func(filename):
+    # Lógica para segmentación por color
+    pass
+
+@image_controller.route('/convert_bw/<filename>')
+def convert_bw_func(filename):
+    # Lógica para convertir a blanco y negro
+    pass
 
 # Y así sucesivamente para las demás funcionalidades.
