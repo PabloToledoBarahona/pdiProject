@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leer Imagen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h2>Leer Imagen</h2>
+            <form action="{{ url_for('image_controller.read_image_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <button type="submit" class="btn">Subir Imagen</button>
+            </form>
+            {% if img_shape %}
+            <h2>Información de la Imagen</h2>
+            <p>Tamaño de la imagen: {{ img_shape }}</p>
+            <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Imagen Subida" class="image-display">
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>

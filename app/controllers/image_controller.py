@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
-from app.modules import histogram
+from app.modules import histogram, read_image
 
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
@@ -44,8 +44,26 @@ def show_histogram():
             filename = secure_filename(file.filename)
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
-            histogram_path, error = histogram.compute_histogram(file_path)
+            histogram_path, eq_image_path, error = histogram.compute_histogram(file_path)
             if error:
                 return error, 400
-            return render_template('histogram.html', histogram_path=os.path.basename(histogram_path))
+            return render_template('histogram.html', histogram_path=os.path.basename(histogram_path), eq_image_path=os.path.basename(eq_image_path), filename=filename)
     return render_template('histogram.html')
+
+@image_controller.route('/read_image', methods=['GET', 'POST'])
+def read_image_view():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return "No file part", 400
+        file = request.files['file']
+        if file.filename == '':
+            return "No selected file", 400
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            img_shape, error = read_image.get_image_info(file_path)
+            if error:
+                return error, 400
+            return render_template('read_image.html', img_shape=img_shape, filename=filename)
+    return render_template('read_image.html')
