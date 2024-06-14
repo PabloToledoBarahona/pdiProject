@@ -8,24 +8,16 @@
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Bienvenido</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('image_controller.upload_file') }}">Subir Imagen</a></li>
-                </ul>
-            </nav>
-        </div>
+        <h1>Bienvenido al Proyecto de Procesamiento de Imágenes</h1>
+        <nav>
+            <a href="{{ url_for('image_controller.upload') }}">Subir Imagen</a>
+        </nav>
     </header>
     <main>
-        <div class="container">
-            <p>¡Estamos trabajando en el diseño!</p>
-        </div>
+        <p>Esta es la página de inicio. Usa el menú para navegar.</p>
     </main>
     <footer>
-        <div class="container">
-            <p>Pablo Toledo & Sergio Escalante</p>
-        </div>
+        <p>Pablo Toledo & Sergio Escalante</p>
     </footer>
 </body>
 </html>
