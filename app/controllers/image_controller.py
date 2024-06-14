@@ -11,7 +11,8 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 @image_controller.route('/')
 def index():
-    return render_template('index.html')
+    image_files = os.listdir(UPLOAD_FOLDER)
+    return render_template('index.html', image_files=image_files)
 
 @image_controller.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -68,7 +69,6 @@ def read_image_view():
             return render_template('read_image.html', img_shape=img_shape, filename=filename)
     return render_template('read_image.html')
 
-
 @image_controller.route('/segment_color', methods=['GET', 'POST'])
 def segment_color_view():
     if request.method == 'POST':
@@ -88,8 +88,6 @@ def segment_color_view():
                 return error, 400
             return render_template('segment_color.html', segmented_image_path=os.path.basename(segmented_image_path), filename=filename)
     return render_template('segment_color.html')
-
-
 
 @image_controller.route('/convert_bw', methods=['GET', 'POST'])
 def convert_bw_view():

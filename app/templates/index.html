@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto PDI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carousel.css') }}">
     <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/carousel.js') }}" defer></script>
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -13,6 +15,18 @@
         <div class="container">
             <h1>Bienvenido al Proyecto de Procesamiento de Imágenes</h1>
             <p>Selecciona una opción del menú para comenzar.</p>
+            
+            <div class="carousel">
+                <button class="carousel-button carousel-button--left">‹</button>
+                <div class="carousel-track-container">
+                    <div class="carousel-track">
+                        {% for image in image_files %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ image) }}" alt="Imagen">
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="carousel-button carousel-button--right">›</button>
+            </div>
         </div>
     </main>
     <footer>
