@@ -1,19 +1,22 @@
 <header>
     <h1>Proyecto PDI</h1>
+    <input type="checkbox" id="menu-toggle">
+    <label class="menu-icon" for="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+    <nav class="menu">
+        <ul>
+            <li><a href="{{ url_for('image_controller.index') }}">Inicio</a></li>
+            <li><a href="{{ url_for('image_controller.upload') }}">Subir Imagen</a></li>
+            <li><a href="{{ url_for('image_controller.read_image_view') }}">Leer Imagen</a></li>
+            <li><a href="{{ url_for('image_controller.show_histogram') }}">Histograma</a></li>
+            <li><a href="{{ url_for('image_controller.segment_color_view') }}">Segmentar Color</a></li>
+            <li><a href="{{ url_for('image_controller.convert_bw_view') }}">Convertir a B/N</a></li>
+        </ul>
+    </nav>
 </header>
-<input type="checkbox" id="menu-toggle">
-<label class="menu-icon" for="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-</label>
-<nav class="menu">
-    <ul>
-        <li><a href="{{ url_for('image_controller.index') }}">Inicio</a></li>
-        <li><a href="{{ url_for('image_controller.upload') }}">Subir Imagen</a></li>
-        <li><a href="{{ url_for('image_controller.read_image_view') }}">Leer Imagen</a></li>
-        <li><a href="{{ url_for('image_controller.show_histogram') }}">Histograma</a></li>
-        <li><a href="{{ url_for('image_controller.segment_color_view') }}">Segmentar Color</a></li>
-        <li><a href="{{ url_for('image_controller.convert_bw_view') }}">Convertir a B/N</a></li>
-    </ul>
-</nav>
+<footer>
+    <p>Pablo Toledo & Sergio Escalante</p>
+</footer>
