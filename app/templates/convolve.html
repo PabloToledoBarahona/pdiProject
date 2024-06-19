@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convolución de Imagen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Aplicar Convolución a la Imagen</h1>
+            <form action="{{ url_for('image_controller.convolve_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="kernel_size">Tamaño del Kernel:</label>
+                <input type="number" name="kernel_size" id="kernel_size" value="5" min="1" max="31">
+                <label for="sigma">Sigma:</label>
+                <input type="number" name="sigma" id="sigma" value="1.0" step="0.1" min="0.1" max="10.0">
+                <button type="submit" class="btn">Aplicar Convolución</button>
+            </form>
+            <div class="image-grid">
+                {% if original_image %}
+                    <div class="image-section">
+                        <h2>Imagen Original</h2>
+                        <img src="{{ url_for('static', filename='uploads/' ~ original_image) }}" alt="Imagen Original" class="image-display">
+                    </div>
+                {% endif %}
+                {% if convolved_image %}
+                    <div class="image-section">
+                        <h2>Imagen Convolucionada</h2>
+                        <img src="{{ url_for('static', filename='uploads/' ~ convolved_image) }}?{{ timestamp }}" alt="Imagen Convolucionada" class="image-display">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
