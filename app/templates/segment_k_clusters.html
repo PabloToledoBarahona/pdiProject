@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segmentación K-Means</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Segmentar Imagen con K-Means</h1>
+            <form action="{{ url_for('image_controller.segment_k_clusters_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="clusters">Número de Clusters (1-5):</label>
+                <input type="number" name="clusters" id="clusters" min="1" max="5" value="2">
+                <button type="submit" class="btn">Segmentar</button>
+            </form>
+            {% if segmented_image %}
+                <div class="image-section">
+                    <h2>Imagen Segmentada</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ segmented_image) }}" alt="Imagen Segmentada" class="image-display">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>

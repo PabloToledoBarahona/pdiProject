@@ -9,6 +9,8 @@ from app.modules.transform_geometry import rotate_image
 from app.modules.negative import make_negative
 from app.modules.scale import scale_image
 from app.modules.quantize import quantize_image
+from app.modules.segment_k_clusters import segment_k_clusters
+from app.modules.masks import apply_mask
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -358,11 +360,41 @@ def quantize_image_view():
             filename = secure_filename(file.filename)
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
-
             quantized_path, error = quantize_image(file_path, levels)
             if error:
                 return error, 400
-            
             return render_template('quantize_image.html', quantized_image=os.path.basename(quantized_path))
-    
     return render_template('quantize_image.html')
+
+
+@image_controller.route('/segment_k_clusters', methods=['GET', 'POST'])
+def segment_k_clusters_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        clusters = int(request.form.get('clusters', 2))
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            segmented_path, error = segment_k_clusters(file_path, clusters)
+            if error:
+                return error, 400
+            return render_template('segment_k_clusters.html', segmented_image=os.path.basename(segmented_path))
+    return render_template('segment_k_clusters.html')
+
+
+@image_controller.route('/masks', methods=['GET', 'POST'])
+def masks_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        lower_color = request.form.get('lower_color').split(',')
+        upper_color = request.form.get('upper_color').split(',')
+        if file and lower_color and upper_color:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            masked_image_path, error = apply_mask(file_path, [int(x) for x in lower_color], [int(x) for x in upper_color])
+            if error:
+                return error, 400
+            return render_template('masks.html', masked_image=os.path.basename(masked_image_path))
+    return render_template('masks.html')

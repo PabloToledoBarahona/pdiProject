@@ -1,30 +1,48 @@
-<header>
-    <h1>Proyecto PDI</h1>
-    <input type="checkbox" id="menu-toggle">
-    <label class="menu-icon" for="menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-    </label>
-    <nav class="menu">
-        <ul>
-            <li><a href="{{ url_for('image_controller.index') }}">Inicio</a></li>
-            <li><a href="{{ url_for('image_controller.upload') }}">Subir Imagen</a></li>
-            <li><a href="{{ url_for('image_controller.read_image_view') }}">Leer Imagen</a></li>
-            <li><a href="{{ url_for('image_controller.show_histogram') }}">Histograma</a></li>
-            <li><a href="{{ url_for('image_controller.segment_color_view') }}">Segmentar Color</a></li>
-            <li><a href="{{ url_for('image_controller.convert_bw_view') }}">Convertir a B/N</a></li>
-            <li><a href="{{ url_for('image_controller.convolve_view') }}">Convolución</a></li>
-            <li><a href="{{ url_for('image_controller.adjust_brightness_view') }}">Modificar Brillo</a></li>
-            <li><a href="{{ url_for('image_controller.adjust_contrast_view') }}">Modificar Contraste</a></li>
-            <li><a href="{{ url_for('image_controller.filters_view') }}">Filtros</a></li>
-            <li><a href="{{ url_for('image_controller.transform_geometry_view') }}">Transformación Geométrica</a></li>
-            <li><a href="{{ url_for('image_controller.negative_image_view') }}">Imagen Negativa</a></li>
-            <li><a href="{{ url_for('image_controller.scale_image_view') }}">Escalar Imagen</a></li>
-            <li><a href="{{ url_for('image_controller.quantize_image_view') }}">Cuantizar Imagen</a></li>
-        </ul>
-    </nav>
-</header>
-<footer>
-    <p>Pablo Toledo & Sergio Escalante</p>
-</footer>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <style>
+        /* Reducir el tamaño de la letra en el encabezado y navegación */
+        header h1 {
+            font-size: 1.5em; /* Ajusta este valor según lo que necesites */
+        }
+        nav.menu ul li a {
+            font-size: 0.9em; /* Ajusta este valor según lo que necesites */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Proyecto PDI</h1>
+        <input type="checkbox" id="menu-toggle">
+        <label class="menu-icon" for="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav class="menu">
+            <ul>
+                <li><a href="{{ url_for('image_controller.index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('image_controller.upload') }}">Subir Imagen</a></li>
+                <li><a href="{{ url_for('image_controller.read_image_view') }}">Leer Imagen</a></li>
+                <li><a href="{{ url_for('image_controller.show_histogram') }}">Histograma</a></li>
+                <li><a href="{{ url_for('image_controller.segment_color_view') }}">Segmentar Color</a></li>
+                <li><a href="{{ url_for('image_controller.convert_bw_view') }}">Convertir a B/N</a></li>
+                <li><a href="{{ url_for('image_controller.convolve_view') }}">Convolución</a></li>
+                <li><a href="{{ url_for('image_controller.adjust_brightness_view') }}">Modificar Brillo</a></li>
+                <li><a href="{{ url_for('image_controller.adjust_contrast_view') }}">Modificar Contraste</a></li>
+                <li><a href="{{ url_for('image_controller.filters_view') }}">Filtros</a></li>
+                <li><a href="{{ url_for('image_controller.transform_geometry_view') }}">Transformación Geométrica</a></li>
+                <li><a href="{{ url_for('image_controller.negative_image_view') }}">Imagen Negativa</a></li>
+                <li><a href="{{ url_for('image_controller.scale_image_view') }}">Escalar Imagen</a></li>
+                <li><a href="{{ url_for('image_controller.quantize_image_view') }}">Cuantizar Imagen</a></li>
+                <li><a href="{{ url_for('image_controller.segment_k_clusters_view') }}">Segmentación K-Means</a></li>
+                <li><a href="{{ url_for('image_controller.masks_view') }}">Máscaras</a></li>
+            </ul>
+        </nav>
+    </header>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>

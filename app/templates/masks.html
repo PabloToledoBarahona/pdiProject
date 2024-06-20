@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicar Máscaras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Aplicar Máscara a la Imagen</h1>
+            <form action="{{ url_for('image_controller.masks_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="lower_color">Color Inferior (HSV):</label>
+                <input type="text" name="lower_color" id="lower_color" placeholder="0,100,100" required>
+                <label for="upper_color">Color Superior (HSV):</label>
+                <input type="text" name="upper_color" id="upper_color" placeholder="10,255,255" required>
+                <button type="submit" class="btn">Aplicar Máscara</button>
+            </form>
+            {% if masked_image %}
+                <div class="image-section">
+                    <h2>Imagen con Máscara</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ masked_image) }}" alt="Imagen con Máscara">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
