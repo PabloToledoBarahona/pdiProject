@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalar Imagen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Escalar Imagen</h1>
+            <form action="{{ url_for('image_controller.scale_image_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="scale_factor">Factor de Escala:</label>
+                <input type="number" name="scale_factor" id="scale_factor" value="1.0" step="0.1" min="0.1">
+                <button type="submit" class="btn">Escalar Imagen</button>
+            </form>
+            {% if scaled_image %}
+                <div class="image-section">
+                    <h2>Imagen Escalada</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ scaled_image) }}" alt="Imagen Escalada" class="image-display">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
