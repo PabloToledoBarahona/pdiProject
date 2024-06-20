@@ -8,6 +8,7 @@ from app.modules.filters import apply_gaussian_blur, apply_median_blur, apply_ed
 from app.modules.transform_geometry import rotate_image
 from app.modules.negative import make_negative
 from app.modules.scale import scale_image
+from app.modules.quantize import quantize_image
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -341,11 +342,27 @@ def scale_image_view():
             filename = secure_filename(file.filename)
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
-
             scaled_path, error = scale_image(file_path, scale_factor)
             if error:
                 return error, 400
-            
             return render_template('scale_image.html', scaled_image=os.path.basename(scaled_path))
-    
     return render_template('scale_image.html')
+
+
+@image_controller.route('/quantize_image', methods=['GET', 'POST'])
+def quantize_image_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        levels = int(request.form.get('levels', 4))
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+
+            quantized_path, error = quantize_image(file_path, levels)
+            if error:
+                return error, 400
+            
+            return render_template('quantize_image.html', quantized_image=os.path.basename(quantized_path))
+    
+    return render_template('quantize_image.html')
