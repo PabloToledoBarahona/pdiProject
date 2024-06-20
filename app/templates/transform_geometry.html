@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformación Geométrica de Imagen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Transformar Geométricamente la Imagen</h1>
+            <form action="{{ url_for('image_controller.transform_geometry_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <button type="submit" name="action" value="rotate_90" class="btn">Girar 90°</button>
+                <button type="submit" name="action" value="rotate_180" class="btn">Girar 180°</button>
+                <button type="submit" name="action" value="rotate_270" class="btn">Girar 270°</button>
+            </form>
+            {% if transformed_image %}
+                <div class="image-section">
+                    <h2>Imagen Transformada</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ transformed_image) }}" alt="Imagen Transformada" class="image-display">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>

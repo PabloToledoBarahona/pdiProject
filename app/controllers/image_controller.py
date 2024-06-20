@@ -5,6 +5,7 @@ from app.modules import histogram, read_image, segment_color, convert_bw, convol
 from app.modules.brightness import adjust_brightness
 from app.modules.contrast import adjust_contrast
 from app.modules.filters import apply_gaussian_blur, apply_median_blur, apply_edge_detection
+from app.modules.transform_geometry import rotate_image
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -289,3 +290,30 @@ def filters_view():
                 output_path = apply_edge_detection(file_path, filter_type)
             return render_template('filters.html', original_image=filename, filtered_image=output_path)
     return render_template('filters.html')
+
+
+@image_controller.route('/transform_geometry', methods=['GET', 'POST'])
+def transform_geometry_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+
+            action = request.form['action']
+            if action == 'rotate_90':
+                transformed_path, error = rotate_image(file_path, 90)
+            elif action == 'rotate_180':
+                transformed_path, error = rotate_image(file_path, 180)
+            elif action == 'rotate_270':
+                transformed_path, error = rotate_image(file_path, 270)
+            else:
+                return "Acción no reconocida", 400
+
+            if error:
+                return error, 400
+            
+            return render_template('transform_geometry.html', transformed_image=os.path.basename(transformed_path))
+    
+    return render_template('transform_geometry.html')
