@@ -29,7 +29,7 @@
                 {% if convolved_image %}
                     <div class="image-section">
                         <h2>Imagen Convolucionada</h2>
-                        <img src="{{ url_for('static', filename='uploads/' ~ convolved_image) }}?{{ timestamp }}" alt="Imagen Convolucionada" class="image-display">
+                        <img src="{{ url_for('static', filename='uploads/convolved_image.png') }}" alt="Imagen Convolucionada" class="image-display">
                     </div>
                 {% endif %}
             </div>

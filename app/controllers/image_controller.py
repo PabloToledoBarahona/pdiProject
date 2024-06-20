@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 import os, time
 from werkzeug.utils import secure_filename
 from app.modules import histogram, read_image, segment_color, convert_bw, convolution
+from app.modules.brightness import adjust_brightness
 
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
@@ -110,10 +111,6 @@ def convert_bw_view():
             return render_template('convert_bw.html', bw_image_path=os.path.basename(bw_image_path), filename=filename)
     return render_template('convert_bw.html')
 
-from flask import Blueprint, render_template, request, redirect, url_for
-import os, time
-from werkzeug.utils import secure_filename
-from app.modules import histogram, read_image, segment_color, convert_bw, convolution
 
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
@@ -235,6 +232,23 @@ def convolve_view():
             convolved_image_path, error = convolution.perform_convolution(file_path, kernel_size, sigma)
             if error:
                 return error, 400
-            timestamp = int(time.time())  # Asegúrate de que esta línea esté funcionando correctamente
-            return render_template('convolve.html', original_image=filename, convolved_image=convolved_image_path, timestamp=timestamp)
+            timestamp = int(time.time())
+            return render_template('convolve.html', original_image=filename, convolved_image='convolved_image.png', timestamp=timestamp)
     return render_template('convolve.html')
+
+
+
+@image_controller.route('/adjust_brightness', methods=['GET', 'POST'])
+def adjust_brightness_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            brightness_level = int(request.form.get('brightness', 0))
+            modified_image_path, error = adjust_brightness(file_path, brightness_level)
+            if error:
+                return error, 400
+            return render_template('adjust_brightness.html', original_image=filename, modified_image=modified_image_path)
+    return render_template('adjust_brightness.html')
