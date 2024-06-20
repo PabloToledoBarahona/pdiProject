@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtros de Imagen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Aplicar Filtros a la Imagen</h1>
+            <form action="{{ url_for('image_controller.filters_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="filter_type">Tipo de Filtro:</label>
+                <select name="filter_type" id="filter_type">
+                    <option value="gaussian">Gaussiano</option>
+                    <option value="median">Borroso</option>
+                    <option value="canny">Canny</option>
+                    <option value="sobel">Sobel</option>
+                    <option value="laplace">Laplace</option>
+                </select>
+                <label for="kernel_size">Tamaño del Kernel:</label>
+                <input type="number" name="kernel_size" id="kernel_size" value="5" min="1" max="31">
+                <button type="submit" class="btn">Aplicar Filtro</button>
+            </form>
+            {% if original_image %}
+                <div class="image-section">
+                    <h2>Imagen Original</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ original_image) }}" alt="Imagen Original">
+                </div>
+            {% endif %}
+            {% if filtered_image %}
+                <div class="image-section">
+                    <h2>Imagen Filtrada</h2>
+                    <img src="{{ url_for('static', filename='uploads/filtered_image.png') }}" alt="Imagen Modificada" class="image-display">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>

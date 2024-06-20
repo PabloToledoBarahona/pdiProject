@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 from app.modules import histogram, read_image, segment_color, convert_bw, convolution
 from app.modules.brightness import adjust_brightness
 from app.modules.contrast import adjust_contrast
-
+from app.modules.filters import apply_gaussian_blur, apply_median_blur, apply_edge_detection
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -270,3 +270,22 @@ def adjust_contrast_view():
             timestamp = int(time.time())
             return render_template('adjust_contrast.html', original_image=filename, contrast_image=contrast_image_path, timestamp=timestamp)
     return render_template('adjust_contrast.html')
+
+@image_controller.route('/filters', methods=['GET', 'POST'])
+def filters_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            kernel_size = int(request.form.get('kernel_size', 5))
+            filter_type = request.form.get('filter_type', 'gaussian')
+            if filter_type == 'gaussian':
+                output_path = apply_gaussian_blur(file_path, kernel_size)
+            elif filter_type == 'median':
+                output_path = apply_median_blur(file_path, kernel_size)
+            elif filter_type in ['canny', 'sobel', 'laplace']:
+                output_path = apply_edge_detection(file_path, filter_type)
+            return render_template('filters.html', original_image=filename, filtered_image=output_path)
+    return render_template('filters.html')
