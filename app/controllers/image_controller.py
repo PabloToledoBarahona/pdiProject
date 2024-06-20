@@ -3,6 +3,7 @@ import os, time
 from werkzeug.utils import secure_filename
 from app.modules import histogram, read_image, segment_color, convert_bw, convolution
 from app.modules.brightness import adjust_brightness
+from app.modules.contrast import adjust_contrast
 
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
@@ -252,3 +253,20 @@ def adjust_brightness_view():
                 return error, 400
             return render_template('adjust_brightness.html', original_image=filename, modified_image=modified_image_path)
     return render_template('adjust_brightness.html')
+
+
+@image_controller.route('/adjust_contrast', methods=['GET', 'POST'])
+def adjust_contrast_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        alpha = float(request.form.get('alpha', 1.0)) 
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            contrast_image_path, error = adjust_contrast(file_path, alpha)
+            if error:
+                return error, 400
+            timestamp = int(time.time())
+            return render_template('adjust_contrast.html', original_image=filename, contrast_image=contrast_image_path, timestamp=timestamp)
+    return render_template('adjust_contrast.html')
