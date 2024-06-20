@@ -6,6 +6,7 @@ from app.modules.brightness import adjust_brightness
 from app.modules.contrast import adjust_contrast
 from app.modules.filters import apply_gaussian_blur, apply_median_blur, apply_edge_detection
 from app.modules.transform_geometry import rotate_image
+from app.modules.negative import make_negative
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -300,7 +301,6 @@ def transform_geometry_view():
             filename = secure_filename(file.filename)
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
-
             action = request.form['action']
             if action == 'rotate_90':
                 transformed_path, error = rotate_image(file_path, 90)
@@ -310,10 +310,26 @@ def transform_geometry_view():
                 transformed_path, error = rotate_image(file_path, 270)
             else:
                 return "Acción no reconocida", 400
+            if error:
+                return error, 400
+            return render_template('transform_geometry.html', transformed_image=os.path.basename(transformed_path))
+    return render_template('transform_geometry.html')
 
+
+@image_controller.route('/negative_image', methods=['GET', 'POST'])
+def negative_image_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+
+            negative_path, error = make_negative(file_path)
             if error:
                 return error, 400
             
-            return render_template('transform_geometry.html', transformed_image=os.path.basename(transformed_path))
+            return render_template('negative_image.html', negative_image=os.path.basename(negative_path))
     
-    return render_template('transform_geometry.html')
+    return render_template('negative_image.html')
+
