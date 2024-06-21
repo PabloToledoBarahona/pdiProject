@@ -12,6 +12,7 @@ from app.modules.quantize import quantize_image
 from app.modules.segment_k_clusters import segment_k_clusters
 from app.modules.masks import apply_mask
 from app.modules.edge_detection import detect_edges 
+from app.modules.fourier import apply_fourier_transform
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -442,3 +443,18 @@ def detect_objects_view():
             result_path, objects_data = object_detection.detect_objects(file_path, min_area)
             return render_template('detect_objects.html', original_image=filename, result_image=result_path, objects_data=objects_data)
     return render_template('detect_objects.html')
+
+
+
+
+@image_controller.route('/fourier', methods=['GET', 'POST'])
+def apply_fourier():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            spectrum_path, inverse_path = apply_fourier_transform(file_path)
+            return render_template('fourier.html', spectrum_image=os.path.basename(spectrum_path), inverse_image=os.path.basename(inverse_path))
+    return render_template('fourier.html')

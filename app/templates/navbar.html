@@ -6,8 +6,21 @@
         header h1 {
             font-size: 1.5em; /* Ajusta este valor según lo que necesites */
         }
+        nav.menu ul {
+            max-height: 80vh; /* Ajusta esta altura según tus necesidades */
+            overflow-y: auto; /* Permite desplazamiento vertical dentro del menú */
+            padding-right: 10px; /* Agrega espacio para el desplazamiento si es necesario */
+        }
         nav.menu ul li a {
             font-size: 0.9em; /* Ajusta este valor según lo que necesites */
+            white-space: nowrap; /* Evita que los textos se partan en líneas */
+        }
+        .menu-icon span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -37,11 +50,12 @@
                 <li><a href="{{ url_for('image_controller.scale_image_view') }}">Escalar Imagen</a></li>
                 <li><a href="{{ url_for('image_controller.quantize_image_view') }}">Cuantizar Imagen</a></li>
                 <li><a href="{{ url_for('image_controller.segment_k_clusters_view') }}">Segmentación K-Means</a></li>
-                <li><a href="{{ url_for('image_controller.detect_objects_view') }}">Detección de Objetos</a></li>
                 <li><a href="{{ url_for('image_controller.masks_view') }}">Máscaras</a></li>
                 <li><a href="{{ url_for('image_controller.apply_kernel') }}">Kernel</a></li>
                 <li><a href="{{ url_for('image_controller.edge_detection_view') }}">Detección de Bordes</a></li>
-                
+                <li><a href="{{ url_for('image_controller.detect_objects_view') }}">Detección de Objetos</a></li>
+                <li><a href="{{ url_for('image_controller.apply_fourier') }}">Fourier</a></li>
+
             </ul>
         </nav>
     </header>

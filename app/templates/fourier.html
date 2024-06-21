@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformada de Fourier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Aplicar Transformada de Fourier</h1>
+            <form action="{{ url_for('image_controller.apply_fourier') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <button type="submit" class="btn">Aplicar Fourier</button>
+            </form>
+            {% if spectrum_image %}
+                <div class="image-section">
+                    <h2>Espectro de Fourier</h2>
+                    <img src="{{ url_for('static', filename='uploads/fourier_spectrum.jpg') }}" alt="Espectro de Fourier">
+                </div>
+            {% endif %}
+            {% if inverse_image %}
+                <div class="image-section">
+                    <h2>Imagen Inversa de Fourier</h2>
+                    <img src="{{ url_for('static', filename='uploads/fourier_inverse.jpg') }}" alt="Inversa de Fourier">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
