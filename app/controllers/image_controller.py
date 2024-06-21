@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import os, time
 from werkzeug.utils import secure_filename
-from app.modules import histogram, read_image, segment_color, convert_bw, convolution, kernels
+from app.modules import histogram, read_image, segment_color, convert_bw, convolution, kernels, object_detection
 from app.modules.brightness import adjust_brightness
 from app.modules.contrast import adjust_contrast
 from app.modules.filters import apply_gaussian_blur, apply_median_blur, apply_edge_detection
@@ -427,3 +427,18 @@ def edge_detection_view():
             edge_image_path, count = detect_edges(file_path, min_area)
             return render_template('edge_detection.html', original_image=filename, edge_image=edge_image_path, count=count)
     return render_template('edge_detection.html')
+
+
+
+@image_controller.route('/detect_objects', methods=['GET', 'POST'])
+def detect_objects_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        min_area = int(request.form.get('min_area', 100))
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            result_path, objects_data = object_detection.detect_objects(file_path, min_area)
+            return render_template('detect_objects.html', original_image=filename, result_image=result_path, objects_data=objects_data)
+    return render_template('detect_objects.html')

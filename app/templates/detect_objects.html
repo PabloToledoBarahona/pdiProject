@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detección de Objetos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Detección de Objetos en la Imagen</h1>
+            <form action="{{ url_for('image_controller.detect_objects_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="min_area">Área mínima:</label>
+                <input type="number" name="min_area" id="min_area" value="100">
+                <button type="submit" class="btn">Detectar Objetos</button>
+            </form>
+            {% if original_image %}
+                <div class="image-section">
+                    <h2>Imagen Original</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ original_image) }}" alt="Imagen Original">
+                </div>
+            {% endif %}
+            {% if result_image %}
+                <div class="image-section">
+                    <h2>Imagen con Objetos Detectados</h2>
+                    <img src="{{ url_for('static', filename='uploads/objects_detected.jpg') }}" alt="Imagen con Objetos">
+                    <ul>
+                        {% for area, perimeter, cx, cy in objects_data %}
+                            <li>Área: {{ area }}, Perímetro: {{ perimeter }}, Centro: ({{ cx }}, {{ cy }})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
