@@ -11,6 +11,7 @@ from app.modules.scale import scale_image
 from app.modules.quantize import quantize_image
 from app.modules.segment_k_clusters import segment_k_clusters
 from app.modules.masks import apply_mask
+from app.modules.edge_detection import detect_edges 
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -413,3 +414,16 @@ def apply_kernel():
             return render_template('kernels.html', original_image=filename, processed_image=os.path.basename(processed_image_path))
     return render_template('kernels.html')
 
+
+@image_controller.route('/edge_detection', methods=['GET', 'POST'])
+def edge_detection_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            min_area = int(request.form.get('min_area', 100))
+            edge_image_path, count = detect_edges(file_path, min_area)
+            return render_template('edge_detection.html', original_image=filename, edge_image=edge_image_path, count=count)
+    return render_template('edge_detection.html')
