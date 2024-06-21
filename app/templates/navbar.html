@@ -2,18 +2,17 @@
 <html lang="es">
 <head>
     <style>
-        /* Reducir el tamaño de la letra en el encabezado y navegación */
         header h1 {
-            font-size: 1.5em; /* Ajusta este valor según lo que necesites */
+            font-size: 1.5em;
         }
         nav.menu ul {
-            max-height: 80vh; /* Ajusta esta altura según tus necesidades */
-            overflow-y: auto; /* Permite desplazamiento vertical dentro del menú */
-            padding-right: 10px; /* Agrega espacio para el desplazamiento si es necesario */
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 10px; 
         }
         nav.menu ul li a {
-            font-size: 0.9em; /* Ajusta este valor según lo que necesites */
-            white-space: nowrap; /* Evita que los textos se partan en líneas */
+            font-size: 0.9em; 
+            white-space: nowrap; 
         }
         .menu-icon span {
             display: block;
@@ -56,7 +55,7 @@
                 <li><a href="{{ url_for('image_controller.detect_objects_view') }}">Detección de Objetos</a></li>
                 <li><a href="{{ url_for('image_controller.apply_fourier') }}">Fourier</a></li>
                 <li><a href="{{ url_for('image_controller.apply_morphology_view') }}">Morfología</a></li>
-
+                <li><a href="{{ url_for('image_controller.image_operations_view') }}">Operaciones de Imágenes</a></li>
             </ul>
         </nav>
     </header>

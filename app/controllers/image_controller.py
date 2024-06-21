@@ -14,6 +14,7 @@ from app.modules.masks import apply_mask
 from app.modules.edge_detection import detect_edges 
 from app.modules.fourier import apply_fourier_transform
 from app.modules.morphology import apply_morphology
+from app.modules import image_operations
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -475,4 +476,27 @@ def apply_morphology_view():
             modified_image = apply_morphology(file_path, morph_type, iterations)
             return render_template('morphology.html', modified_image=modified_image)
     return render_template('morphology.html')
+
+
+
+@image_controller.route('/image_operations', methods=['GET', 'POST'])
+def image_operations_view():
+    if request.method == 'POST':
+        file1 = request.files.get('file1')
+        file2 = request.files.get('file2')
+        operation = request.form.get('operation')
+        if file1 and file2:
+            filename1 = secure_filename(file1.filename)
+            file_path1 = os.path.join(UPLOAD_FOLDER, filename1)
+            file1.save(file_path1)
+            filename2 = secure_filename(file2.filename)
+            file_path2 = os.path.join(UPLOAD_FOLDER, filename2)
+            file2.save(file_path2)
+            if operation == 'add':
+                result_image, _ = image_operations.add_images(file_path1, file_path2)
+                return render_template('image_operations.html', added_image=result_image)
+            elif operation == 'subtract':
+                result_image, _ = image_operations.subtract_images(file_path1, file_path2)
+                return render_template('image_operations.html', subtracted_image=result_image)
+    return render_template('image_operations.html')
 

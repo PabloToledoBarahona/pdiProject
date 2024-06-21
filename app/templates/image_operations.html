@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma y Resta de Imágenes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Suma y Resta de Imágenes</h1>
+            <form action="{{ url_for('image_controller.image_operations_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file1" accept="image/*" required>
+                <input type="file" name="file2" accept="image/*" required>
+                <button type="submit" name="operation" value="add" class="btn">Sumar Imágenes</button>
+                <button type="submit" name="operation" value="subtract" class="btn">Restar Imágenes</button>
+            </form>
+            {% if added_image %}
+                <div class="image-section">
+                    <h2>Imagen Sumada</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ added_image) }}" alt="Imagen Sumada">
+                </div>
+            {% endif %}
+            {% if subtracted_image %}
+                <div class="image-section">
+                    <h2>Imagen Restada</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ subtracted_image) }}" alt="Imagen Restada">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
