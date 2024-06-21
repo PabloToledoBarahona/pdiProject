@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morfología de Imagen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Aplicar Operaciones Morfológicas</h1>
+            <form action="{{ url_for('image_controller.apply_morphology_view') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="operation_type">Tipo de Operación:</label>
+                <select name="operation_type" id="operation_type">
+                    <option value="dilation">Dilatación</option>
+                    <option value="erosion">Erosión</option>
+                </select>
+                <label for="iterations">Número de Iteraciones:</label>
+                <input type="number" name="iterations" id="iterations" value="1" min="1" max="10">
+                <button type="submit" class="btn">Aplicar</button>
+            </form>
+            {% if modified_image %}
+                <div class="image-section">
+                    <h2>Imagen Modificada</h2>
+                    <img src="{{ url_for('static', filename='uploads/morphology.jpg') }}" alt="Imagen Morfológica Modificada">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>

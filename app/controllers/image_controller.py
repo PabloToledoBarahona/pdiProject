@@ -13,6 +13,7 @@ from app.modules.segment_k_clusters import segment_k_clusters
 from app.modules.masks import apply_mask
 from app.modules.edge_detection import detect_edges 
 from app.modules.fourier import apply_fourier_transform
+from app.modules.morphology import apply_morphology
 image_controller = Blueprint('image_controller', __name__, template_folder='../templates')
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -458,3 +459,20 @@ def apply_fourier():
             spectrum_path, inverse_path = apply_fourier_transform(file_path)
             return render_template('fourier.html', spectrum_image=os.path.basename(spectrum_path), inverse_image=os.path.basename(inverse_path))
     return render_template('fourier.html')
+
+
+
+@image_controller.route('/morphology', methods=['GET', 'POST'])
+def apply_morphology_view():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            morph_type = request.form.get('operation_type', 'dilation')
+            iterations = int(request.form.get('iterations', 1))
+            modified_image = apply_morphology(file_path, morph_type, iterations)
+            return render_template('morphology.html', modified_image=modified_image)
+    return render_template('morphology.html')
+
