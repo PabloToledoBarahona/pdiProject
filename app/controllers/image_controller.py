@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import os, time
 from werkzeug.utils import secure_filename
-from app.modules import histogram, read_image, segment_color, convert_bw, convolution
+from app.modules import histogram, read_image, segment_color, convert_bw, convolution, kernels
 from app.modules.brightness import adjust_brightness
 from app.modules.contrast import adjust_contrast
 from app.modules.filters import apply_gaussian_blur, apply_median_blur, apply_edge_detection
@@ -398,3 +398,18 @@ def masks_view():
                 return error, 400
             return render_template('masks.html', masked_image=os.path.basename(masked_image_path))
     return render_template('masks.html')
+
+
+@image_controller.route('/apply_kernel', methods=['GET', 'POST'])
+def apply_kernel():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        kernel_type = request.form.get('kernel_type')
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(file_path)
+            processed_image_path = kernels.apply_kernel(file_path, kernel_type)
+            return render_template('kernels.html', original_image=filename, processed_image=os.path.basename(processed_image_path))
+    return render_template('kernels.html')
+

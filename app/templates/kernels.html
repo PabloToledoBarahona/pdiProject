@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicar Kernels</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        <div class="container">
+            <h1>Aplicar Kernels a la Imagen</h1>
+            <form action="{{ url_for('image_controller.apply_kernel') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <label for="kernel_type">Tipo de Kernel:</label>
+                <select name="kernel_type" id="kernel_type">
+                    <option value="average">Promedio</option>
+                    <option value="edge_detection1">Detección de Bordes 1</option>
+                    <option value="edge_detection2">Detección de Bordes 2</option>
+                </select>
+                <button type="submit" class="btn">Aplicar Kernel</button>
+            </form>
+            {% if original_image %}
+                <div class="image-section">
+                    <h2>Imagen Original</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ original_image) }}" alt="Imagen Original">
+                </div>
+            {% endif %}
+            {% if processed_image %}
+                <div class="image-section">
+                    <h2>Imagen Procesada</h2>
+                    <img src="{{ url_for('static', filename='uploads/' ~ processed_image) }}" alt="Imagen Procesada">
+                </div>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        <p>Pablo Toledo & Sergio Escalante</p>
+    </footer>
+</body>
+</html>
